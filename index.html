@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>エッセンス - ミニマルアクセサリー</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-white: #ffffff;
+            --color-black: #000000;
+            --color-dark-gray: #1a1a1a;
+            --color-medium-gray: #808080;
+            --color-light-gray: #f5f5f5;
+            --color-border: #e0e0e0;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lato', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--color-white);
+            color: var(--color-black);
+            line-height: 1.6;
+        }
+
+        /* ==================== HEADER & NAVIGATION ==================== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--color-white);
+            border-bottom: 1px solid var(--color-border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-decoration: none;
+            color: var(--color-black);
+            font-family: 'Playfair Display', serif;
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--color-black);
+            font-size: 14px;
+            letter-spacing: 0.5px;
+            position: relative;
+            transition: color var(--transition);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--color-black);
+            transition: width var(--transition);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .menu-icon {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .menu-icon span {
+            width: 24px;
+            height: 2px;
+            background-color: var(--color-black);
+            transition: var(--transition);
+        }
+
+        /* ==================== HERO SECTION ==================== */
+        .hero {
+            margin-top: 80px;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--color-white) 0%, var(--color-light-gray) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background-color: var(--color-light-gray);
+            border-radius: 50%;
+            top: 50%;
+            right: -200px;
+            transform: translateY(-50%);
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            max-width: 600px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--color-medium-gray);
+            margin-bottom: 40px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .hero .btn {
+            display: inline-block;
+            padding: 16px 48px;
+            background-color: var(--color-black);
+            color: var(--color-white);
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            border: 2px solid var(--color-black);
+        }
+
+        .hero .btn:hover {
+            background-color: var(--color-white);
+            color: var(--color-black);
+        }
+
+        /* ==================== GALLERY SECTION ==================== */
+        .gallery-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 40px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-header p {
+            color: var(--color-medium-gray);
+            font-size: 16px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        /* Slider Container */
+        .slider-container {
+            position: relative;
+            background-color: var(--color-light-gray);
+            padding: 60px 0;
+            border-radius: 2px;
+        }
+
+        .slider-wrapper {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            padding: 0 40px;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+        }
+
+        .slider-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+        .product-card {
+            flex: 0 0 280px;
+            background-color: var(--color-white);
+            border: 1px solid var(--color-border);
+            transition: var(--transition);
+            cursor: pointer;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(135deg, var(--color-light-gray), var(--color-medium-gray));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: var(--color-white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+        }
+
+        .product-info {
+            padding: 25px;
+        }
+
+        .product-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+
+        .product-category {
+            color: var(--color-medium-gray);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .product-price {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--color-black);
+        }
+
+        .slider-controls {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .slider-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--color-border);
+            background-color: var(--color-white);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .slider-btn:hover {
+            background-color: var(--color-black);
+            color: var(--color-white);
+            border-color: var(--color-black);
+        }
+
+        /* ==================== PRODUCT DETAIL MODAL ==================== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--color-white);
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        .modal-header {
+            padding: 30px;
+            border-bottom: 1px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-close {
+            font-size: 28px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--color-black);
+        }
+
+        .modal-body {
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, var(--color-light-gray), var(--color-medium-gray));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+        }
+
+        .modal-details h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .modal-details .price {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 20px 0;
+            color: var(--color-black);
+        }
+
+        .modal-details .description {
+            color: var(--color-medium-gray);
+            line-height: 1.8;
+            margin: 25px 0;
+            font-size: 15px;
+        }
+
+        .modal-details .specs {
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+            padding: 20px 0;
+            margin: 25px 0;
+        }
+
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 14px;
+        }
+
+        .spec-label {
+            color: var(--color-medium-gray);
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+            padding: 16px;
+            background-color: var(--color-black);
+            color: var(--color-white);
+            border: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 20px;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: var(--color-dark-gray);
+        }
+
+        /* ==================== ABOUT SECTION ==================== */
+        .about-section {
+            background-color: var(--color-light-gray);
+            padding: 100px 40px;
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, var(--color-medium-gray), var(--color-dark-gray));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .about-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            margin-bottom: 25px;
+            letter-spacing: -0.5px;
+        }
+
+        .about-content p {
+            color: var(--color-medium-gray);
+            margin-bottom: 20px;
+            line-height: 1.9;
+            font-size: 15px;
+        }
+
+        .about-values {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .value-item h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .value-item p {
+            font-size: 13px;
+            color: var(--color-medium-gray);
+        }
+
+        /* ==================== CONTACT SECTION ==================== */
+        .contact-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 40px;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .contact-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            margin-bottom: 30px;
+        }
+
+        .contact-item-label {
+            color: var(--color-medium-gray);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .contact-item-value {
+            font-size: 16px;
+            color: var(--color-black);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-medium-gray);
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--color-border);
+            background-color: var(--color-white);
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-black);
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background-color: var(--color-black);
+            color: var(--color-white);
+            border: none;
+            font-size: 14px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .submit-btn:hover {
+            background-color: var(--color-dark-gray);
+        }
+
+        /* ==================== FOOTER ==================== */
+        footer {
+            background-color: var(--color-dark-gray);
+            color: var(--color-white);
+            padding: 60px 40px;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-column a,
+        .footer-column p {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 13px;
+            margin-bottom: 12px;
+            transition: var(--transition);
+        }
+
+        .footer-column a:hover {
+            color: var(--color-white);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* ==================== ANIMATIONS ==================== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 15px 20px;
+            }
+
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background-color: var(--color-white);
+                padding: 20px;
+                gap: 15px;
+                border-bottom: 1px solid var(--color-border);
+            }
+
+            nav.active {
+                display: flex;
+            }
+
+            .menu-icon {
+                display: flex;
+            }
+
+            .hero {
+                height: auto;
+                padding: 60px 20px;
+                margin-top: 60px;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .gallery-section,
+            .about-section,
+            .contact-section {
+                padding: 60px 20px;
+            }
+
+            .section-header h2 {
+                font-size: 32px;
+            }
+
+            .slider-wrapper {
+                padding: 0 20px;
+            }
+
+            .product-card {
+                flex: 0 0 220px;
+            }
+
+            .about-container,
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .modal-body {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            footer {
+                padding: 40px 20px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 18px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .slider-wrapper {
+                gap: 15px;
+            }
+
+            .product-card {
+                flex: 0 0 180px;
+            }
+
+            .product-card:nth-child(n+4) {
+                display: none;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Import Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lato:wght@300;400;700&display=swap');
+    </style>
+</head>
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header id="header">
+    <div class="header-container">
+        <a href="#" class="logo">エッセンス</a>
+        <nav id="nav">
+            <a href="#gallery">商品一覧</a>
+            <a href="#about">ブランド</a>
+            <a href="#contact">お問い合わせ</a>
+        </nav>
+        <div class="menu-icon" id="menuIcon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</header>
+
+<!-- ==================== HERO SECTION ==================== -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>永遠の優雅さ</h1>
+        <p>モダンなミニマリストのための厳選アクセサリー</p>
+        <a href="#gallery" class="btn">コレクションを見る</a>
+    </div>
+</section>
+
+<!-- ==================== GALLERY SECTION ==================== -->
+<section class="gallery-section" id="gallery">
+    <div class="section-header">
+        <h2>おすすめ商品</h2>
+        <p>厳選されたミニマルアクセサリーコレクション</p>
+    </div>
+
+    <div class="slider-container">
+        <div class="slider-wrapper" id="slider">
+            <!-- 商品 1 -->
+            <div class="product-card" onclick="openModal('スターリングシルバーリング', 'リング', '¥9,800', 'タイムレスなデザインのスターリングシルバーバンド。毎日のコーディネートに最適。職人による精密な手仕上げ。')">
+                <div class="product-image">💍</div>
+                <div class="product-info">
+                    <div class="product-category">リング</div>
+                    <div class="product-name">スターリングシルバーリング</div>
+                    <div class="product-price">¥9,800</div>
+                </div>
+            </div>
+
+            <!-- 商品 2 -->
+            <div class="product-card" onclick="openModal('レザーブレスレット', 'ブレスレット', '¥7,200', 'プレミアムな本革ブレスレット。ミニマルな金具デザイン。黒とコニャックブラウンから選べます。サイズ調整可能。')">
+                <div class="product-image">⌚</div>
+                <div class="product-info">
+                    <div class="product-category">ブレスレット</div>
+                    <div class="product-name">レザーブレスレット</div>
+                    <div class="product-price">¥7,200</div>
+                </div>
+            </div>
+
+            <!-- 商品 3 -->
+            <div class="product-card" onclick="openModal('ゴールドペンダントネックレス', 'ネックレス', '¥13,800', '18Kゴールドメッキペンダント。繊細なチェーン。幾何学模様デザイン。長さ：40～45cm調整可能。')">
+                <div class="product-image">📿</div>
+                <div class="product-info">
+                    <div class="product-category">ネックレス</div>
+                    <div class="product-name">ゴールドペンダントネックレス</div>
+                    <div class="product-price">¥13,800</div>
+                </div>
+            </div>
+
+            <!-- 商品 4 -->
+            <div class="product-card" onclick="openModal('ミニマルスタッドピアス', 'ピアス', '¥5,000', 'シンプルなステンレス製スタッド。アレルギー対応。どんな場面にも合うタイムレスなデザイン。')">
+                <div class="product-image">✨</div>
+                <div class="product-info">
+                    <div class="product-category">ピアス</div>
+                    <div class="product-name">ミニマルスタッドピアス</div>
+                    <div class="product-price">¥5,000</div>
+                </div>
+            </div>
+
+            <!-- 商品 5 -->
+            <div class="product-card" onclick="openModal('チタンウェディングバンド', 'リング', '¥17,000', '軽量で耐久性の高いチタンリング。傷がつきにくい。つや消しとポリッシュ仕上げから選択可能。')">
+                <div class="product-image">💎</div>
+                <div class="product-info">
+                    <div class="product-category">リング</div>
+                    <div class="product-name">チタンウェディングバンド</div>
+                    <div class="product-price">¥17,000</div>
+                </div>
+            </div>
+
+            <!-- 商品 6 -->
+            <div class="product-card" onclick="openModal('パールドロップピアス', 'ピアス', '¥8,600', '淡水パールピアス。14Kゴールドポスト。上品で洗練された印象。')">
+                <div class="product-image">🌟</div>
+                <div class="product-info">
+                    <div class="product-category">ピアス</div>
+                    <div class="product-name">パールドロップピアス</div>
+                    <div class="product-price">¥8,600</div>
+                </div>
+            </div>
+
+            <!-- 商品 7 -->
+            <div class="product-card" onclick="openModal('シルクスカーフ', 'アクセサリー', '¥6,400', 'イタリアンシルク製スカーフ。ミニマルなプリント。様々なスタイリングに対応。')">
+                <div class="product-image">🎀</div>
+                <div class="product-info">
+                    <div class="product-category">アクセサリー</div>
+                    <div class="product-name">シルクスカーフ</div>
+                    <div class="product-price">¥6,400</div>
+                </div>
+            </div>
+
+            <!-- 商品 8 -->
+            <div class="product-card" onclick="openModal('ステンレススチールウォッチ', '腕時計', '¥22,000', 'ミニマリストデザインの腕時計。本革ストラップ。防水性30m。スイス製クォーツ。')">
+                <div class="product-image">⏰</div>
+                <div class="product-info">
+                    <div class="product-category">腕時計</div>
+                    <div class="product-name">ステンレススチールウォッチ</div>
+                    <div class="product-price">¥22,000</div>
+                </div>
+            </div>
+
+            <!-- 商品 9 -->
+            <div class="product-card" onclick="openModal('ゴールドチェーンブレスレット', 'ブレスレット', '¥10,500', '18Kゴールドメッキチェーンブレスレット。7インチ、調整可能。重ね付けに最適。')">
+                <div class="product-image">⛓️</div>
+                <div class="product-info">
+                    <div class="product-category">ブレスレット</div>
+                    <div class="product-name">ゴールドチェーンブレスレット</div>
+                    <div class="product-price">¥10,500</div>
+                </div>
+            </div>
+
+            <!-- 商品 10 -->
+            <div class="product-card" onclick="openModal('ブラックオニキスリング', 'リング', '¥12,100', 'つやのあるブラックオニキスストーン。ポリッシュシルバー枠。現代的で洗練されたデザイン。')">
+                <div class="product-image">🔷</div>
+                <div class="product-info">
+                    <div class="product-category">リング</div>
+                    <div class="product-name">ブラックオニキスリング</div>
+                    <div class="product-price">¥12,100</div>
+                </div>
+            </div>
+
+            <!-- 商品 11 -->
+            <div class="product-card" onclick="openModal('ミニマルアンクレット', 'ブレスレット', '¥5,800', '繊細なステンレス製アンクレット。夏のコーディネートに最適。9～10インチ調整可能。')">
+                <div class="product-image">🌊</div>
+                <div class="product-info">
+                    <div class="product-category">ブレスレット</div>
+                    <div class="product-name">ミニマルアンクレット</div>
+                    <div class="product-price">¥5,800</div>
+                </div>
+            </div>
+
+            <!-- 商品 12 -->
+            <div class="product-card" onclick="openModal('ステートメントカフブレスレット', 'ブレスレット', '¥14,900', '大胆な幾何学模様のカフ。つや消しシルバー。ミニマルながら存在感のあるデザイン。')">
+                <div class="product-image">📦</div>
+                <div class="product-info">
+                    <div class="product-category">ブレスレット</div>
+                    <div class="product-name">ステートメントカフブレスレット</div>
+                    <div class="product-price">¥14,900</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slider-controls">
+            <button class="slider-btn" onclick="scrollSlider(-300)">❮</button>
+            <button class="slider-btn" onclick="scrollSlider(300)">❯</button>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== ABOUT SECTION ==================== -->
+<section class="about-section" id="about">
+    <div class="about-container">
+        <div class="about-image">✦</div>
+        <div class="about-content">
+            <h2>私たちのストーリー</h2>
+            <p>エッセンスは、シンプルさの中に真の贅沢があるという信念のもとに設立されました。ミニマリストデザインと卓越した職人技を表現するアクセサリーを厳選しています。</p>
+            <p>すべてのピースは、モダンなライフスタイルを補完するために丁寧に選び抜かれています。私たちは量より質を、トレンドより永遠を、衝動より意図を信じています。</p>
+
+            <div class="about-values">
+                <div class="value-item">
+                    <h4>上質な素材</h4>
+                    <p>世界中の倫理的なサプライヤーから最高品質の素材を調達しています。</p>
+                </div>
+                <div class="value-item">
+                    <h4>タイムレスなデザイン</h4>
+                    <p>すべてのピースがトレンドを超越して長く愛用できます。</p>
+                </div>
+                <div class="value-item">
+                    <h4>サステナビリティ</h4>
+                    <p>環境配慮した梱包と責任ある生産を実践しています。</p>
+                </div>
+                <div class="value-item">
+                    <h4>ハンドクラフト</h4>
+                    <p>丹念で細部にこだわった手作業で製造されます。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== お問い合わせセクション ==================== -->
+<section class="contact-section" id="contact">
+    <div class="section-header">
+        <h2>お問い合わせ</h2>
+        <p>ご質問やご相談をお受けしております</p>
+    </div>
+
+    <div class="contact-container">
+        <div class="contact-info">
+            <h3>ご連絡先</h3>
+            
+            <div class="contact-item">
+                <div class="contact-item-label">メール</div>
+                <div class="contact-item-value">hello@essence.jp</div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-item-label">電話</div>
+                <div class="contact-item-value">03-XXXX-XXXX</div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-item-label">住所</div>
+                <div class="contact-item-value">
+                    東京都渋谷区<br>
+                    ミニマルストリート 123<br>
+                    日本
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <div class="contact-item-label">営業時間</div>
+                <div class="contact-item-value">
+                    月～金：9:00～18:00<br>
+                    土：10:00～16:00<br>
+                    日：休業
+                </div>
+            </div>
+        </div>
+
+        <form class="contact-form" onsubmit="handleFormSubmit(event)">
+            <div class="form-group">
+                <label>お名前</label>
+                <input type="text" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label>メールアドレス</label>
+                <input type="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label>件名</label>
+                <input type="text" name="subject" required>
+            </div>
+
+            <div class="form-group">
+                <label>メッセージ</label>
+                <textarea name="message" required></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">送信する</button>
+        </form>
+    </div>
+</section>
+
+<!-- ==================== フッター ==================== -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-column">
+            <h4>ショップ</h4>
+            <a href="#gallery">全商品</a>
+            <a href="#gallery">リング</a>
+            <a href="#gallery">ネックレス</a>
+            <a href="#gallery">ブレスレット</a>
+        </div>
+
+        <div class="footer-column">
+            <h4>会社</h4>
+            <a href="#about">私たちについて</a>
+            <a href="#contact">お問い合わせ</a>
+            <a href="#">配送情報</a>
+            <a href="#">返品について</a>
+        </div>
+
+        <div class="footer-column">
+            <h4>情報</h4>
+            <a href="#">プライバシーポリシー</a>
+            <a href="#">利用規約</a>
+            <a href="#">クッキーポリシー</a>
+        </div>
+
+        <div class="footer-column">
+            <h4>フォロー</h4>
+            <a href="#">Instagram</a>
+            <a href="#">Facebook</a>
+            <a href="#">Pinterest</a>
+            <a href="#">Twitter</a>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2024 エッセンス. All rights reserved.</p>
+        <p>心を込めてデザイン。意図を持って製作。</p>
+    </div>
+</footer>
+
+<!-- ==================== 商品詳細モーダル ==================== -->
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modalTitle">商品詳細</h2>
+            <button class="modal-close" onclick="closeModal()">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="modal-image">💍</div>
+            <div class="modal-details">
+                <h3 id="detailName">商品名</h3>
+                <div class="price" id="detailPrice">¥9,800</div>
+                <p class="description" id="detailDescription">商品の説明がここに表示されます。</p>
+                
+                <div class="specs">
+                    <div class="spec-item">
+                        <span class="spec-label">素材</span>
+                        <span>スターリングシルバー</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">仕上げ</span>
+                        <span>ポリッシュ</span>
+                    </div>
+                    <div class="spec-item">
+                        <span class="spec-label">配送</span>
+                        <span>送料無料（5～7日）</span>
+                    </div>
+                </div>
+
+                <button class="add-to-cart-btn" onclick="handleAddToCart()">カートに追加</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ==================== HEADER SCROLL EFFECT ====================
+    window.addEventListener('scroll', () => {
+        const header = document.getElementById('header');
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+
+    // ==================== MOBILE MENU ====================
+    const menuIcon = document.getElementById('menuIcon');
+    const nav = document.getElementById('nav');
+
+    menuIcon.addEventListener('click', () => {
+        nav.classList.toggle('active');
+    });
+
+    // Close menu when link is clicked
+    document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', () => {
+            nav.classList.remove('active');
+        });
+    });
+
+    // ==================== SLIDER FUNCTIONALITY ====================
+    function scrollSlider(distance) {
+        const slider = document.getElementById('slider');
+        slider.scrollBy({
+            left: distance,
+            behavior: 'smooth'
+        });
+    }
+
+    // ==================== MODAL FUNCTIONALITY ====================
+    const modal = document.getElementById('modal');
+
+    function openModal(name, category, price, description) {
+        document.getElementById('detailName').textContent = name;
+        document.getElementById('detailPrice').textContent = price;
+        document.getElementById('detailDescription').textContent = description;
+        document.getElementById('modalTitle').textContent = category;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    // Close modal when clicking outside
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // ==================== フォーム処理 ====================
+    function handleFormSubmit(e) {
+        e.preventDefault();
+        alert('お問い合わせをいただきありがとうございます。24時間以内にご返信させていただきます。');
+        e.target.reset();
+    }
+
+    function handleAddToCart() {
+        alert('商品をカートに追加しました！（このサイトはデモです。本格的な決済機能にはゲートウェイの統合が必要です）');
+        closeModal();
+    }
+
+    // ==================== SMOOTH SCROLL ====================
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href !== '#' && document.querySelector(href)) {
+                e.preventDefault();
+                document.querySelector(href).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
